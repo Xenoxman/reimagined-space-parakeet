@@ -1,0 +1,413 @@
+define J = Character("Jaime")
+define C = Character("Captain")
+define N = Character("???")
+image Jaime = "Jaime.png"
+image Ferry = "Ferry_Background.png"
+image Dock = "Dock.png"
+image Captain = "Captain.png"
+image CG1 = "CG1.png"
+image room = "CG1.png"
+image memory1 = "Memory 1.png"
+image item1 = "book.png"
+image item2 = "key.png"
+image found = "found.png"
+image item3 = "coin.png"
+define key_found = False
+
+label game:
+
+    # Show the room image.
+    scene room
+
+    # Set up a variable to track how many items the player has collected.
+    $items_collected = 0
+
+    # Create a function to handle clicking on an item.
+    # This function takes an item number (1, 2, or 3) and checks if
+    # the item is still in the room. If it is, it plays a sound,
+    # increments the items_collected variable, and removes the item
+    # from the room. If all three items have been collected, it
+    # ends the game.
+    python:
+        def click_item(item_num):
+            if item_num == 1 and "item1" in room:
+                play sound "effect"
+                $items_collected += 1
+                remove "item1" from room
+                if items_collected == 3:
+                    return
+            elif item_num == 2 and "item2" in room:
+                play sound "effect"
+                $items_colle" from room
+                if items_collected == 3cted += 1
+                remove "item2:
+                    return
+            elif item_num == 3 and "item3" in room:
+                play sound "effect"
+                $items_collected += 1
+                remove "item3" from room
+                if items_collected == 3:
+                    return
+
+    # Display the items in the room as clickable images.
+    show item1 at (100, 100) clicked click_item(1)
+    show item2 at (200, 200) clicked click_item(2)
+    show item3 at (300, 300) clicked click_item(3)
+
+    # Loop until the game ends.
+    $game_ended = False
+    while not game_ended:
+        # Wait for the player to click on an item.
+        pause
+        # Check if all three items have been collected.
+        if items_collected == 3:
+            # End the game.
+            $game_ended = True
+
+label main_menu:
+
+    # Show a background image.
+    scene CG1
+
+    # Display some text.
+    J "Welcome to the game!"
+
+    # Add a button to start the game.
+    menu:
+        "Play game":
+            jump game
+
+
+# The script of the game goes in this file.
+
+# Declare characters used by this game. The color argument colorizes the
+# name of the character.
+
+define J = Character("Jaime")
+define C = Character("Captain")
+define N = Character("???")
+image Jaime = "Jaime.png"
+image Ferry = "Ferry_Background.png"
+image Dock = "Dock.png"
+image Captain = "Captain.png"
+image CG1 = "CG1.png"
+image room = "CG1.png"
+image memory1 = "Memory 1.png"
+image item1 = "book.png"
+image item2 = "key.png"
+image found = "found.png"
+image item3 = "coin.png"
+define key_found = False
+
+# The game starts here.
+
+label start:
+
+    # Show a background. This uses a placeholder by default, but you can
+    # add a file (named either "bg room.png" or "bg room.jpg") to the
+    # images directory to show it.
+
+    scene CG1
+
+    J "Isle of the mind, what secrets do you hold for me?"
+
+    J "3 days ago I received a letter in the post."
+
+    J "3 days ago  I was sitting in my relatively warm office."
+
+    J "3 missing in 1 month."
+
+    scene Ferry
+
+    # This shows a character sprite. A placeholder is used, but you can
+    # replace it by adding a file named "eileen happy.png" to the images
+    # directory.
+
+    show Jaime
+
+    # These display lines of dialogue.
+
+
+    N "Shit! Where the fuck is it?"
+
+    show Jaime at left
+
+    show Captain at right
+
+    J "Is everything ok? "
+
+    C "OH! Jesus!!"
+
+    C "…Yes, sure it’s great, I’m great, super-duper, totally fine."
+
+    C "I….I have lost my keys."
+
+    J "Oh…."
+
+    J "Wait"
+
+    J "WHAT!"
+
+    J "Aren’t yo – I mean. Shouldn’t you be- Like- steering the boat?! "
+
+    C "Dinnae get yer knickers in a twist."
+
+    C "Ma wee boy Douglas is steering"
+
+    J "*“wee boy”…I have to say this isn’t filling me with confidence.*"
+
+    C "Of course, this happens when I take the kids away for a weekend, you know give the wifey a break."
+
+    C "She’s goanna be fuming. I can just hear her now."
+
+    C "“You dobber, honestly Fergus. Bleeding idiot, how are you goanna lock up now, or get in the house ‘cause I’m telling you right now I ain’t letting you in.”"
+
+    C " Ma was right when she said you would bring me nothing but disappointment and pain”"
+
+    J "I can give you a hand if you would like."
+
+    menu:
+
+        "Where did you see them last?":
+            jump where
+
+        "What do they look like?":
+            jump look
+
+    label where: 
+
+        C "I don’t know, I took them out of my bag, went around the deck, and chatted with a couple of people."
+
+        C "I swear one second, they were in my hand the next, gone, evaporated, poof."
+
+        jump marry
+
+    label look:
+
+        C "…ther…they’re keys mate. You know metal, with one jagged edge, you lose them on a night out. It's got a pissing fish keyring on it."
+
+        J "*sigh*"
+
+        jump marry
+label mini_game:
+
+    # The objective of this game is to find the hidden key. The player will
+    # be presented with 3 options, and they need to choose the correct one
+    # to find the key.
+
+    scene book
+
+    J "Let's see if I can find anything in this book..."
+
+    menu:
+
+        "Read page 42":
+            J "There's nothing here..."
+
+            jump mini_game
+
+        "Look under the table":
+            J "Nothing here either..."
+
+            jump mini_game
+
+        "Check inside the drawer":
+            J "Yes! I found the key!"
+
+            # Display a found image to indicate that the player has found
+            # the key.
+            scene found
+            show key
+
+            # Update a variable to indicate that the key has been found.
+            $key_found = True
+
+            jump continue_story
+
+    # If the player didn't find the key, display a message to indicate
+    # that they need to keep looking.
+    J "Hmm, I didn't find anything useful. I should keep looking."
+
+    jump mini_game
+
+    label marry: 
+
+    menu:
+        "Touch bag":
+            jump Memory
+
+    label Memory:
+
+    scene memory1
+
+    C "Dinnae talk to yer brother like that."
+
+    C "Sit down!"
+
+    C "Douglas, I’m warning you, da ye want a skelpt bottom cause that’s wit your heading towards. "
+
+    C "Haud yer wheesht."
+
+    C "kids, kids, KIDS!!!"
+
+    J "I have a lead."
+
+    # Add a jump to the mini_game label to start the mini-game.
+ 
+
+label continue_story:
+
+    # If the player found the key, display a message to indicate that they
+    # can now use it.
+    if key_found:
+        J "Great, I found the key! Now I can use it to unlock something."
+
+        # Display an image of the key to remind the player that they have it.
+        scene found
+        show key
+
+    # If the player didn't find the key, continue with the story.
+    else:
+        J "I need to keep searching for the key. Maybe there's more I can find."
+
+Scene Dock
+
+show Jamie at left
+show Craig at right
+
+        C "Hello,"
+        C "Hi."
+        C "Over here!"
+
+        J "*oh geez*"
+        J "Hi..."
+
+        C "You must be Inspector hawthorn."
+        C "Craig Gabharson, mayoral candidate"
+        C "I am most glad you decided to take on the case"
+
+        J "Of course, I am happy to be assistance in any way I can Mr Gabharson"
+
+        C "Auch, please call me Craig"
+        C "As you can imagine it's been a total shock to all the residents of the island"
+        C "Luckily, we have one of our finest aid, you , in your investigation"
+
+        J "Oh,while I appreciate the offer,"
+        J "Theres really no nee-"
+
+        C "Nonsense"
+        C "And please you don't have to thank me."
+        C "This is Morven Donaldson, our town hero"
+        C "Morven,this is the famous Inspector Hawthorn!"
+
+show Morven at middle 
+
+        M "PI Hawthrone, thank you so much for coming"
+        M "You have no clue how greateful we are,"
+        M "The police around here are absolute dog shi-"
+
+        J "*town hero ?!*"
+        J "Ms Donaldson"
+
+        C "Well, I'll let you to get acquainted"
+        C "Thank again, Inespector"
+        C "If there's anything I can do to help aid you in the investigation, don't hesitate to swing by my office."
+        C "Let's just hope everyone is found safe and sound"
+
+        M "Shall we, Inspector?"
+
+
+Scene Park
+    show Jamie at left
+    show Morven at right
+
+        J "Did you know the victim?"
+
+        M "Everyone knows everyone around here."
+
+        J "*I can't tell if thats a good or a bad thing*"
+
+        M "Her name is Gayle McDorcherty, sweet wee hing."
+        M "Barely six years old"
+
+        J "So, this is the last place she was seen?"
+        J "No one saw her wander off?"
+        J "Or speak to anyone?"
+        J "Her parent just let her wander around"
+
+        M "It's not like it's a city, its safe...."
+        M "She's shes and wouldn't tlak to that many people"
+
+        J "hmmmm?"
+        J "Please don't feel as though you must stay, I can work efficiently alone"
+
+        M "With all due respect, this is my village, my people"
+        M "And I am of much better use here than I'm sat in an office, organising the hall for the next car boot sale"
+        M "Now, are we gonna stand around all day or get to work"
+
+
+        M "Did you find anyting, Inspector"
+        M "Inspector?"
+        M "Hello?"
+
+        J "*Sharp intake of breath*"
+        J "Sorry,"
+        J "Yes, I found these"
+        
+        M "Cigarette butts?"
+        M "Are you going to take a sample of  DNA off of it or something"
+
+        J "No, need."
+        J "I know our next led."
+        J "Where's the nearest butchers?"
+
+        M "Butchers?!"
+        M "How the hell can you know that?"
+
+        J "Call it a detective's intuition. "
+
+Scene Butcher_Shop
+    show Jamie at left 
+    show Morven at right
+
+        M "Are you seriously not going to tell me why you have decided that the butchers have something to do with Gayle. "
+
+        J "McNulty N’ sons"
+
+        M "Aye."
+        M "Been on this island for as long as I can remember"
+
+        J "Well shall we?"
+
+        M "Hold your horses wee man."
+        M "Gregor is…. um…well, "
+        M "he isnt the best with"
+        M "…..strangers. "
+        M "Hows about I butter him up a bit before, you begin your questioning"
+
+        J "*Not the best with people* "
+
+        M "Hes all yours detective"
+        M "But, don't go to harsh."
+
+Pause 1
+    Puzzle mini_game
+
+Scene Butcher_Inside
+    show Jamie 
+        J "Mr Mcnunlty?"
+        J "I have a few questions regarding the night of young gayles disapperance"
+
+    show Gregor at middle
+
+        J "I appreciate your time, Gregor. "
+
+        G "*grunts in thanks*"
+
+        M "Well I can certainly understand why you are so revered."
+        M "But "
+        M "How the hell did you figure that out."
+
+        J ""
+*this is where i put the interrgation options etc
+        
